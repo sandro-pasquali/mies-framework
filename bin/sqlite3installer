@@ -1,0 +1,16 @@
+# sqlite is so prevalent it is unlikely that your OS won't have it installed.
+# Nevertheless...
+#
+if command -v sqlite3 >/dev/null 2>&1 ; then
+	echo "sqlite3 is installed"
+	node bin/build_admin_tables
+else
+	wget http://www.sqlite.org/sqlite-autoconf-3071401.tar.gz
+	tar xvfz sqlite-autoconf-3071401.tar.gz
+	cd sqlite-autoconf-3071401
+	./configure
+	make
+	make install
+	rm -rf sqlite-*
+	node bin/build_admin_tables
+fi

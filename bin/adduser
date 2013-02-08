@@ -1,0 +1,75 @@
+process.on('uncaughtException', function(err) {
+	clio.write("@yellow@_black ERROR IN ADDUSER @@`");
+	clio.write("@white@_red " + err + " @@`");
+	process.exit(1);
+});
+
+var config 			= require("../config.json");
+var db_prefix 		= config.db_prefix + ":";
+var config_data_key = db_prefix + "server:config";
+var total 			= 0;
+
+var fs 		= require('fs');
+var redis	= require('redis');
+var db		= redis.createClient(config.db_port, config.db_host, config.db_options);
+var clio 	= require("clio")();
+var command	= require("commander");
+
+var add = function() {
+
+	command.prompt({
+		username	: 'Username: ',
+		password	: 'Password: ',
+	  	password2	: 'Repeat Password: ',
+	  	status		: 'Status [0-9]. 0 is inactive. 9 is full admin: '
+	}, function(obj){
+
+		//	Set anything to "quit", instead of ctrl-c
+		//
+		if(obj.username === "" || obj.password === "" || obj.password2 === "" || obj.status === "") {
+			process.exit(0);
+		}
+
+		//  Validate data
+		//
+		if(!/^[^\s]{4,30}$/.test(obj.username)) {
+			clio.write("@green@_blackInvalid username -- Must be between 4 and 30 characters. Received @white@_green " + obj.username + " @@`");
+			return add();
+		}
+
+		if(obj.password !== obj.password2) {
+			clio.write("@green@_blackPasswords do not match @@`");
+			return add()
+		}
+
+		if(!/^[^\s]{6,30}$/.test(obj.password)) {
+			clio.write("@green@_blackInvalid password sent -- Must be between 6 and 30 characters.  @@`");
+			return add();
+		}
+		
+		obj.status = parseInt(obj.status);
+		if(obj.status < 0 || obj.status > 9) {
+			clio.write("@green@_blackInvalid status. Must be between 0 and 9.  @@`");
+			return add();
+		}
+
+		//	Add user
+		//
+		db.hset(db_prefix + "users", obj.username, JSON.stringify({
+			password: obj.password,
+			username: obj.username,
+			email: config.admin_email,
+			status: obj.status
+		}), function(err) {
+			if(err) {
+				throw("@white@_redError in writing user record. Something amiss with Redis?@@`");
+			}
+
+			clio.write("@green User @blue" + obj.username + "@green added with status @blue" + obj.status + " @@`");
+			add();
+		});
+
+	});
+};
+
+add();

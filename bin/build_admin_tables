@@ -1,0 +1,41 @@
+process.on('uncaughtException', function(err) {
+	clio.write("@yellow@_black BUILD ERROR @@`");
+	clio.write("@white@_red " + err + " @@`");
+	process.exit(1);
+});
+
+var fs 		= require('fs');
+var sqlite3	= require('sqlite3').verbose();
+var clio 	= require("clio")();
+
+var admindb = new sqlite3.Database('db/admin.db');
+
+admindb.exec("create table IF NOT EXISTS admins (username TEXT, email TEXT, hash TEXT, joined INTEGER)", function(err) {
+
+	if(err) {
+		admindb.close();
+		throw("UNABLE TO CREATE USER TABLE: @yellow " + err + " @@");
+		return process.exit(1);
+	}
+	
+	admindb.close();
+
+/*
+	db.exec("insert into '" + db_usertable + "' values('" + config.admin_username + "', '" + config.admin_email + "', '" + config.admin_password + "', '" + new Date().getTime() + "')", function(err) {
+
+		db.close();
+
+		if(err) {
+			throw("UNABLE TO ADD ADMIN USER: @yellow " + err + " @@");
+			process.exit(0);
+		}
+
+		clio.write("@white@_green make->build complete @@`");
+		process.exit(0);
+	});
+*/
+
+	
+
+});
+

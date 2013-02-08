@@ -1,0 +1,56 @@
+process.on('uncaughtException', function(err) {
+	clio.write("@yellow@_black ERROR IN REMOVEUSER @@`");
+	clio.write("@white@_red " + err + " @@`");
+	process.exit(1);
+});
+
+var config 			= require("../config.json");
+var db_prefix 		= config.db_prefix + ":";
+var config_data_key = db_prefix + "server:config";
+var total 			= 0;
+
+var fs 		= require('fs');
+var redis	= require('redis');
+var db		= redis.createClient(config.db_port, config.db_host, config.db_options);
+var clio 	= require("clio")();
+var command	= require("commander");
+
+var remove = function() {
+
+	command.prompt({
+		username	: 'Username: '
+	}, function(obj){
+
+		//	Set anything to "quit", instead of ctrl-c
+		//
+		if(obj.username === "") {
+			process.exit(0);
+		}
+
+		//  Validate data
+		//
+		if(!/^[^\s]{4,30}$/.test(obj.username)) {
+			clio.write("@green@_blackInvalid username -- Must be between 4 and 30 characters. Received @white@_green " + obj.username + " @@`");
+			return add();
+		}
+
+		command.confirm('Ready to remove user ' + obj.username + '...are you sure [y/n]? ', function(ok){
+			if(ok) {
+				//	Delete user
+				//
+				db.hdel(db_prefix + "users", obj.username, function(err) {
+					if(err) {
+						throw("@white@_redError in removing user record. Something amiss with Redis?@@`");
+					}
+
+					clio.write("@green @_black " + obj.username + " @@@green removed @@`");
+					remove();
+				});
+			} else {
+				remove();
+			}
+		 });
+	});
+};
+
+remove();

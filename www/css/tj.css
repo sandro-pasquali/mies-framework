@@ -1,0 +1,186 @@
+/* 
+	Original ideas for layout from the Express docs, which I'm assuming TJ did, and hence...
+*/
+
+body {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font: 400 14px/1.6 "Open Sans", sans-serif;
+}
+
+h1, h2, h3 {
+  margin: 5px 0;
+  font-weight: normal;
+  color: #353535;
+  -webkit-font-smoothing: antialiased;
+}
+
+h2 {
+  margin-top: 80px;
+  font-weight: bold;
+}
+
+h3 {
+  margin-top: 40px;
+  padding-top: 50px;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+p em {
+  font-weight: bold;
+  font-style: normal;
+  color: #353535;
+}
+
+p {
+  margin: 20px 0;
+}
+
+strong {
+  color: #353535;
+}
+
+#content {
+  margin-left: 80px;
+  width: 900px;
+  margin-bottom: 80px;
+}
+
+section section p {
+  width: 60%;
+}
+
+/* links */
+
+a {
+  color: #259dff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* code */
+
+p code {
+  background: #efefef;
+  border: 1px solid #eaeaea;
+  font-family: monaco, monospace;
+  font-size: .75em;
+  padding: 2px 8px;
+  -webkit-border-radius: 3px;
+}
+
+pre {
+  color: #353535;
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 20px 0;
+  padding: 20px;
+  background: white;
+  border: 1px solid #e7e7e7;
+  border-bottom: 1px solid #ddd;
+  -webkit-box-shadow: 0 1px 3px 0 #eee;
+  -webkit-border-radius: 3px;
+}
+
+pre code {
+  font-family: monaco, monospace;
+  font-size: .8em;
+}
+
+code .comment { color: #888 }
+code .init { color: #2F6FAD }
+code .string { color: #5890AD }
+code .keyword { color: #8A6343 }
+code .number { color: #49AC47 }
+code .scope { color: #CF76E0 }
+
+/* ipad landscape */
+
+@media all and (max-width: 1200px) {
+  #content {
+    width: 760px;
+  }
+}
+
+/* ipad portrait */
+
+@media all and (max-width: 768px) {
+  #content {
+    width: 500px;
+  }
+}
+
+/* iphone portrait */
+
+@media all and (max-width: 650px) {
+
+  #content {
+    width: 380px;
+  }
+
+  section section p {
+    width: 100%;
+  }
+}
+
+/* logo */
+
+#logo {
+  margin: 80px;
+  padding-left: 40px;
+  width: 600px;
+  border-left: 1px dotted #eee;
+  -webkit-font-smoothing: antialiased;
+}
+
+#logo .logo-title {
+  display: block;
+  font: 400 60px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #353535;
+  width: 100%;
+}
+
+#logo .description {
+  position: relative;
+  top: -5px;
+  font: 100 60px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #cecece;
+  line-height: .75;
+}
+
+#logo em {
+  font-style: normal;
+  font-weight: 100;
+  font-size: 12px;
+  color: #999;
+  margin-left: 5px;
+}
+
+#logo a {
+  color: #cecece;
+}
+
+#logo a:hover {
+  text-decoration: none;
+  color: #858585;
+}
+
+#logo img {
+	width: 16px;
+	height: 16px;
+	background-image: url(logo.png);
+	margin-bottom: 28px;
+}
+
+.hr {
+	display: block;
+	margin-left: 80px;
+	width: 80%;
+	height: 1px;
+	background-color: #eee;
+}

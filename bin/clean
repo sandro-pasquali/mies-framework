@@ -1,0 +1,32 @@
+//	Called by `make clean`
+//
+//	Remove all keys in Redis which begin with config.db_prefix
+//
+//	NOTE: This is final, and not recoverable.
+//
+process.on('uncaughtException', function(err) {
+	clio.write("@yellow@_black CLEAN ERROR @@`");
+	clio.write("@white@_red " + err + " @@`");
+	process.exit(1);
+});
+
+var config 		= require("../config.json");
+var db_prefix 	= config.db_prefix + ":";
+
+var redis	= require('redis');
+var db		= redis.createClient(config.db_port, config.db_host, config.db_options);
+var clio 	= require("clio")();
+
+db.keys(db_prefix + "*", function(err, keys) {
+	if(err) {
+		throw "Redis error in CLEAN";
+	}
+	db.del(keys, function(err, num) {
+		clio.write("`@_green@blackCLEAN:@white '" + db_prefix + "' keys removed -> " + (num || 0) + " @@``");
+		process.exit(0);
+	});
+});
+
+
+
+

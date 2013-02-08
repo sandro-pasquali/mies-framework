@@ -1,0 +1,37 @@
+{
+	"name": "mies-framework",
+	"version": "0.1.0",
+	"description": "Full Stack Realtime Javascript Framework",
+	"keywords": ["nodejs","framework","mies","bauhaus","jquery","databinding"],
+	"homepage": "",
+	"author": "Sandro Pasquali <spasquali@gmail.com>",
+	"dependencies": {
+		"connect"		: "*",
+		"express"		: "*",
+		"socket.io"		: "*",
+		"scrypt"		: "*",
+		
+		"passport"			: "*",
+		"passport-local"	: "*",
+		"passport-dropbox"	: "*",
+		"passport-facebook"	: "*",
+		"passport-twitter"	: "*",
+		"passport-linkedin"	: "*",
+		
+		"redis"			: "*",
+		"hiredis" 		: "*",
+		"sqlite3"		: "*",
+		"arango.client" : "*",
+		
+		"amqp"			: "*",
+		"node-uuid"		: "*",
+		"clio"         	: "*",
+		"commander"		: "*",
+		"should"		: "*",
+		"mocha"			: "*",
+		"mies"			: "*",
+		"bauhaus"		: "*",
+		"bauhaus-imap"	: "*"
+	},
+	"engine": "node >= 0.8.0"
+}
