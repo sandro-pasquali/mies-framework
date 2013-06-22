@@ -2,6 +2,8 @@
 
 Realtime framework using Nodejs and jQuery
 
+*** DEPRECATED *** 
+
 ## Features
 
 ```
