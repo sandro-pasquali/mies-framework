@@ -2,7 +2,7 @@
 
 Realtime framework using Nodejs and jQuery
 
-*** DEPRECATED *** 
+*** DEPRECATED *** This framework is obsolete. Look for the Path framework, dropping late 2013.
 
 ## Features
 
